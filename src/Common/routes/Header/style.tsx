@@ -21,12 +21,21 @@ export const TaskManagerHeaderHome = styled.div`
    border-radius: 4px;
 `
 
+export const TaskManagerHeaderBriefCase = styled.div`
+   ${tw`w-10 h-10 text-white flex flex-row items-center  justify-center `};
+   background-color: #4e97c2;
+   border-radius: 4px;
+`
+
 export const TaskManagerHeaderBoards = styled.div`
    ${tw` h-10 text-white flex flex-row items-center `};
    width: 136px;
    justify-content: space-around;
    background-color: #2fa9f1;
    border-radius: 4px;
+   @media (max-width: 713px) {
+      ${tw`w-8`}
+   }
 `
 
 export const TaskManagerHeaderBoardLogo = styled.img`
@@ -35,6 +44,9 @@ export const TaskManagerHeaderBoardLogo = styled.img`
 
 export const TaskManagerHeaderBoardHeading = styled.h1`
    ${tw`font-bold	`}
+   @media(max-width:713px) {
+      display: none;
+   }
 `
 export const TaskManagerHeaderLogo = styled.img`
    ${tw`w-48 h-10`}
