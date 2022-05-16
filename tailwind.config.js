@@ -134,7 +134,7 @@ module.exports = {
             900: '#702459'
          }
       },
-
+      extends: {},
       spacing: {
          px: '1px',
          '0': '0',
