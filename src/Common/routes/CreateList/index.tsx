@@ -68,6 +68,29 @@ class CreateList extends Component<MyProps> {
       console.log(data)
    }
 
+   getTasks = async (listId: string) => {
+      const jwtToken = Cookies.get('jwt_token')
+
+      const { taskName } = this.state
+      const url = `https://api.trello.com/1/lists/${listId}/cards?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}`
+      const options = {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+         }
+      }
+      const response = await fetch(url, options)
+      const data = await response.json()
+      console.log('all tasks in a list')
+      console.log(response)
+      console.log(data)
+      const tasks = [...data]
+      return tasks.map(eachTask => (
+         <EachTask key={eachTask.id}>{eachTask.name}</EachTask>
+      ))
+   }
+
    render(): React.ReactElement {
       const { addTaskActiveId } = this.state
       console.log('lists')
@@ -86,6 +109,10 @@ class CreateList extends Component<MyProps> {
                         </CreateTaskTitleHeading>
                         <BiDotsHorizontalRounded />
                      </CreateTaskTitleContainer>
+
+                     <TasksContainer>
+                        {this.getTasks(eachList.id)}
+                     </TasksContainer>
 
                      {addTaskActiveId !== eachList.id ? (
                         <>
