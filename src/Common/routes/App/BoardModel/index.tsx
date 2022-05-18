@@ -12,11 +12,11 @@ import {
 import './index.css'
 
 interface MyProps {
-   createworkSpace: (name: string) => void
+   createBoard: (name: string) => void
 }
 
 @observer
-class Modal extends React.Component<MyProps> {
+class BoardModal extends React.Component<MyProps> {
    @observable handleModal = { showModal: false, workspaceValue: '' }
 
    @action.bound
@@ -42,25 +42,20 @@ class Modal extends React.Component<MyProps> {
    submit(e: React.SyntheticEvent) {
       e.preventDefault()
       console.log(this.handleModal.workspaceValue)
-      this.props.createworkSpace(this.handleModal.workspaceValue)
+      this.props.createBoard(this.handleModal.workspaceValue)
    }
    render() {
       return (
          <div id='root'>
-            <TaskManagerHeaderCreate>
-               <TaskManagerHeaderButton
-                  onClick={this.handleOpenModal}
-                  id='create'
-               >
-                  Create
-               </TaskManagerHeaderButton>
+            <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
+               <TaskManagerHeaderButton>+ Create Board</TaskManagerHeaderButton>
             </TaskManagerHeaderCreate>
             <ReactModal
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 300,
-                     left: 200,
+                     top: 200,
+                     left: 300,
                      right: 0,
                      bottom: 0,
                      backgroundColor: 'rgba(255, 255, 255, 0.75)'
@@ -102,7 +97,7 @@ class Modal extends React.Component<MyProps> {
                         name='workSpace'
                      />
                      <CreateWorkspaceButton type='submit'>
-                        Add User
+                        Add Board
                      </CreateWorkspaceButton>
                   </form>
                </ModalCreateContainer>
@@ -112,4 +107,4 @@ class Modal extends React.Component<MyProps> {
    }
 }
 
-export default Modal
+export default BoardModal
