@@ -34,9 +34,8 @@ class BoardRoute extends Component<MyProps> {
       }
       const response = await fetch(url, options)
       const data = await response.json()
-      console.log('lists')
-      console.log(data)
-      this.setState({ lists: data })
+      console.log('board detail lists')
+      this.setState({ lists: [...data] })
    }
    render() {
       const { boardId, lists } = this.state

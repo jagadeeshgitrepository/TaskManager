@@ -11,12 +11,52 @@ export const CreateListHeading = styled.h1`
    height: 24px;
 `
 export const CreateListUnorderedList = styled.ul`
-   ${tw`list-none    ml-10 flex flex-row justify-start items-center flex-wrap`};
+   ${tw`list-none    ml-10 flex flex-row justify-start items-start flex-wrap`};
 `
 
 export const CreatedListItem = styled.li`
-   ${tw`rounded flex flex-row justify-between m-2 items-start`};
-   background-color: white;
-   height: 81px;
+   ${tw`rounded flex pt-2 pb-2 pl-4 pr-4 flex-col justify-between m-2 items-start`};
+   background-color: #ebecf0;
+
    width: 254px;
+`
+
+export const CreateTaskTitleContainer = styled.div`
+   ${tw` flex flex-row justify-between w-full p-2 items-center`};
+`
+
+export const CreateTaskTitleHeading = styled.h1`
+   ${tw`text-sm`}
+`
+
+export const CreateTaskAddTaskButton = styled.button`
+   ${tw`rounded  text-sm	`}
+   width: 142px;
+   height: 33px;
+   color: #475569;
+   background: #cbd5e1;
+`
+
+export const CreateTaskTextArea = styled.textarea`
+   ${tw`rounded outline-none text-sm pl-2 pt-2`}
+   Width:222px;
+   height: 68px;
+   box-shadow: 0px 4px 16px 0px #bfbfbf;
+`
+
+export const CreateTaskAddButton = styled.button`
+   ${tw`text-sm rounded mt-2 text-white`}
+   width: 95px;
+   height: 32px;
+   background-color: #1d4ed8;
+`
+export const AddTaskContainer = styled.div`
+   ${tw` flex flex-row justify-start items-center`};
+`
+export const TasksContainer = styled.ul`
+   ${tw`list-none p-0 flex flex-col justify-start items-center flex-wrap`};
+`
+export const EachTask = styled.li`
+   ${tw`mt-2`};
+   box-shadow: 0px 4px 16px 0px #bfbfbf;
 `
