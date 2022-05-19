@@ -30,7 +30,7 @@ export const CreateTaskTitleHeading = styled.h1`
 `
 
 export const CreateTaskAddTaskButton = styled.button`
-   ${tw`rounded  text-sm	`}
+   ${tw`rounded  text-sm mt-2	`}
    width: 142px;
    height: 33px;
    color: #475569;
@@ -38,7 +38,7 @@ export const CreateTaskAddTaskButton = styled.button`
 `
 
 export const CreateTaskTextArea = styled.textarea`
-   ${tw`rounded outline-none text-sm pl-2 pt-2`}
+   ${tw`rounded outline-none mt-2 text-sm pl-2 pt-2`}
    Width:222px;
    height: 68px;
    box-shadow: 0px 4px 16px 0px #bfbfbf;
@@ -52,11 +52,4 @@ export const CreateTaskAddButton = styled.button`
 `
 export const AddTaskContainer = styled.div`
    ${tw` flex flex-row justify-start items-center`};
-`
-export const TasksContainer = styled.ul`
-   ${tw`list-none p-0 flex flex-col justify-start items-center flex-wrap`};
-`
-export const EachTask = styled.li`
-   ${tw`mt-2`};
-   box-shadow: 0px 4px 16px 0px #bfbfbf;
 `

@@ -13,21 +13,11 @@ import {
 interface MyProps {
    currentWorkSpace: string
    boards: any
+   addBoard: (boardname: string) => void
 }
 class CreateBoard extends Component<MyProps> {
-   createBoard = async boardname => {
-      const jwtToken = Cookies.get('jwt_token')
-      const url = `https://api.trello.com/1/boards?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}&name=${boardname}`
-      const options = {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-         }
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      console.log(response)
+   createBoard = boardname => {
+      this.props.addBoard(boardname)
    }
 
    render(): React.ReactElement {

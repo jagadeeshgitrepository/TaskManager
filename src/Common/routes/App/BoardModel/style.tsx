@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import tw from 'twin.macro'
 
 export const TaskManagerHeaderCreate = styled.div`
-   ${tw`rounded flex flex-col ml-12 text-white justify-center items-center`};
-   background-color: #2c90d0;
+   ${tw`rounded flex flex-col ml-12 bg-white text-white justify-center  items-center`};
+
    width: 341px;
    height: 157px;
 `
@@ -12,7 +12,7 @@ export const ModalCreateContainer = styled.div`
    ${tw`flex flex-col p-2 text-black justify-between items-start`}
 `
 export const TaskManagerHeaderButton = styled.button`
-${tw`   pb-2`}
+${tw` text-black   pb-2`}
    color: ${props => (props.cross ? 'black' : '')};
 
 `
@@ -20,7 +20,7 @@ ${tw`   pb-2`}
 export const AddWorkspaceInput = styled.input`
    ${tw`rounded p-2`}
    background-color:#A7B1BF;
-   width: 300px;
+   width: 250px;
    height: 40px;
 `
 export const CreateWorkspaceButton = styled.button`

@@ -73,7 +73,7 @@ class ListModal extends React.Component<MyProps> {
                      borderRadius: '4px',
                      outline: 'none',
                      padding: '20px',
-                     width: '400px',
+                     width: '300px',
                      height: '200px'
                   }
                }}
@@ -92,7 +92,7 @@ class ListModal extends React.Component<MyProps> {
                   <form onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'
-                        placeholder='Add board title'
+                        placeholder='Add List title'
                         onChange={this.changeWorkspaceValue}
                         name='workSpace'
                      />

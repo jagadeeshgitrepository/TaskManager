@@ -47,11 +47,8 @@ class Modal extends React.Component<MyProps> {
    render() {
       return (
          <div id='root'>
-            <TaskManagerHeaderCreate>
-               <TaskManagerHeaderButton
-                  onClick={this.handleOpenModal}
-                  id='create'
-               >
+            <TaskManagerHeaderCreate id='create'>
+               <TaskManagerHeaderButton onClick={this.handleOpenModal}>
                   Create
                </TaskManagerHeaderButton>
             </TaskManagerHeaderCreate>
@@ -59,11 +56,11 @@ class Modal extends React.Component<MyProps> {
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 300,
-                     left: 200,
+                     top: 25,
+                     left: 100,
                      right: 0,
                      bottom: 0,
-                     backgroundColor: 'rgba(255, 255, 255, 0.75)'
+                     backgroundColor: 'transparent'
                   },
                   content: {
                      position: 'absolute',
@@ -72,20 +69,20 @@ class Modal extends React.Component<MyProps> {
                      right: '40px',
                      bottom: '40px',
                      border: '1px solid #ccc',
-                     background: '#fff',
+
                      overflow: 'auto',
                      WebkitOverflowScrolling: 'touch',
                      borderRadius: '4px',
                      outline: 'none',
                      padding: '20px',
-                     width: '400px',
+                     width: '300px',
                      height: '200px'
                   }
                }}
                isOpen={this.handleModal.showModal}
                contentLabel='Minimal Modal Example'
-               className='w-96 h-96 bg-white'
-               parentSelector={() => document.querySelector('#create')}
+               className=' h-96 bg-white'
+               parentSelector={() => document.querySelector('#root')}
             >
                <ModalCreateContainer>
                   <TaskManagerHeaderButton

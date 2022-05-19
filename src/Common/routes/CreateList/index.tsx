@@ -4,7 +4,7 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { GrFormClose } from 'react-icons/gr'
 import BoardModal from '../App/BoardModel/index'
 import ListModal from '../App/ListModel/index'
-
+import Tasks from '../Tasks/index'
 import {
    CreateListContainer,
    CreateListHeading,
@@ -15,80 +15,29 @@ import {
    CreateTaskAddTaskButton,
    CreateTaskTextArea,
    CreateTaskAddButton,
-   AddTaskContainer,
-   TasksContainer,
-   EachTask
+   AddTaskContainer
 } from './style'
 
 interface MyProps {
    boardId: string
-   lists: any
+   lists: { id: string; name: string }[]
+   addList: (listname: string) => void
+
+   addTask: (listId: string, taskName: string) => void
 }
 class CreateList extends Component<MyProps> {
    state = { addTaskActiveId: '', taskName: '' }
-   createList = async listname => {
-      const jwtToken = Cookies.get('jwt_token')
-      const { boardId } = this.props
-      console.log('board Id')
-      console.log(boardId)
-      const url = `https://api.trello.com/1/boards/${boardId}/lists?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}&name=${listname}`
-      const options = {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-         }
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      console.log('lists created')
-      console.log(response)
+   createList = listname => {
+      this.props.addList(listname)
    }
 
    updateAddTaskActiveId = e => this.setState({ addTaskActiveId: e.target.id })
 
    closeAddTaskActiveId = e => this.setState({ addTaskActiveId: '' })
 
-   addTasks = async e => {
-      const jwtToken = Cookies.get('jwt_token')
-      const listId = e.target.id
+   createTask = e => {
       const { taskName } = this.state
-      const url = `https://api.trello.com/1/cards?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}&name=${taskName}&idList=${listId}`
-      const options = {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-         }
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      console.log('tasks  created')
-      console.log(response)
-      console.log(data)
-   }
-
-   getTasks = async (listId: string) => {
-      const jwtToken = Cookies.get('jwt_token')
-
-      const { taskName } = this.state
-      const url = `https://api.trello.com/1/lists/${listId}/cards?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}`
-      const options = {
-         method: 'GET',
-         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-         }
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      console.log('all tasks in a list')
-      console.log(response)
-      console.log(data)
-      const tasks = [...data]
-      return tasks.map(eachTask => (
-         <EachTask key={eachTask.id}>{eachTask.name}</EachTask>
-      ))
+      this.props.addTask(e.target.id, taskName)
    }
 
    render(): React.ReactElement {
@@ -101,7 +50,7 @@ class CreateList extends Component<MyProps> {
       return (
          <>
             <CreateListUnorderedList>
-               {lists.map((eachList: { name: string; id: 'string' }) => (
+               {lists.map((eachList: { name: string; id: string }) => (
                   <CreatedListItem id={eachList.id} key={eachList.id}>
                      <CreateTaskTitleContainer>
                         <CreateTaskTitleHeading>
@@ -110,9 +59,7 @@ class CreateList extends Component<MyProps> {
                         <BiDotsHorizontalRounded />
                      </CreateTaskTitleContainer>
 
-                     <TasksContainer>
-                        {this.getTasks(eachList.id)}
-                     </TasksContainer>
+                     <Tasks listId={eachList.id} />
 
                      {addTaskActiveId !== eachList.id ? (
                         <>
@@ -133,7 +80,7 @@ class CreateList extends Component<MyProps> {
                            ></CreateTaskTextArea>
                            <AddTaskContainer>
                               <CreateTaskAddButton
-                                 onClick={this.addTasks}
+                                 onClick={this.createTask}
                                  id={eachList.id}
                               >
                                  Add Task

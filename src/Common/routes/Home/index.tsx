@@ -29,6 +29,22 @@ class Home extends Component {
       console.log(data)
       this.setState({ boards: data })
    }
+
+   addBoard = async boardname => {
+      const jwtToken = Cookies.get('jwt_token')
+      const url = `https://api.trello.com/1/boards?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}&name=${boardname}`
+      const options = {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+         }
+      }
+      const response = await fetch(url, options)
+      const data = await response.json()
+      console.log(response)
+      this.getBoards()
+   }
    render(): React.ReactElement {
       const { currentWorkSpace, boards } = this.state
       console.log('currentWorkSpace')
@@ -41,6 +57,7 @@ class Home extends Component {
                <CreateBoard
                   currentWorkSpace={currentWorkSpace}
                   boards={boards}
+                  addBoard={this.addBoard}
                />
             </HomeContainer>
          </>

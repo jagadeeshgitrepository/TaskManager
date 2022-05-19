@@ -19,7 +19,7 @@ ${tw`self-end pb-2`}
 export const AddWorkspaceInput = styled.input`
    ${tw`rounded p-2`}
    background-color:#A7B1BF;
-   width: 300px;
+   width: 250px;
    height: 40px;
 `
 export const CreateWorkspaceButton = styled.button`

@@ -46,19 +46,21 @@ class BoardModal extends React.Component<MyProps> {
    }
    render() {
       return (
-         <div id='root'>
+         <div id='root1'>
             <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
-               <TaskManagerHeaderButton>+ Create Board</TaskManagerHeaderButton>
+               <TaskManagerHeaderButton id='createBoard'>
+                  + Create Board
+               </TaskManagerHeaderButton>
             </TaskManagerHeaderCreate>
             <ReactModal
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 200,
-                     left: 300,
+                     top: 100,
+                     left: 100,
                      right: 0,
                      bottom: 0,
-                     backgroundColor: 'rgba(255, 255, 255, 0.75)'
+                     backgroundColor: 'transparent'
                   },
                   content: {
                      position: 'absolute',
@@ -67,20 +69,20 @@ class BoardModal extends React.Component<MyProps> {
                      right: '40px',
                      bottom: '40px',
                      border: '1px solid #ccc',
-                     background: '#fff',
+
                      overflow: 'auto',
                      WebkitOverflowScrolling: 'touch',
                      borderRadius: '4px',
                      outline: 'none',
                      padding: '20px',
-                     width: '400px',
+                     width: '300px',
                      height: '200px'
                   }
                }}
                isOpen={this.handleModal.showModal}
                contentLabel='Minimal Modal Example'
                className='w-96 h-96 bg-white'
-               parentSelector={() => document.querySelector('#create')}
+               parentSelector={() => document.querySelector('#createBoard')}
             >
                <ModalCreateContainer>
                   <TaskManagerHeaderButton
