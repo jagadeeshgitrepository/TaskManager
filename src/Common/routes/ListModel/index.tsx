@@ -1,7 +1,8 @@
 import ReactModal from 'react-modal'
 import React from 'react'
 import { observable, action } from 'mobx'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
+import HeaderStore from '../../stores/HeaderStore/index'
 import {
    TaskManagerHeaderButton,
    TaskManagerHeaderCreate,
@@ -11,12 +12,12 @@ import {
 } from './style'
 import './index.css'
 
-interface MyProps {
-   createworkSpace: (name: string) => void
+interface HeaderProps {
+   headerStore: HeaderStore
 }
-
+@inject('headerStore')
 @observer
-class Modal extends React.Component<MyProps> {
+class ListModal extends React.Component<HeaderProps> {
    @observable handleModal = { showModal: false, workspaceValue: '' }
 
    @action.bound
@@ -40,27 +41,26 @@ class Modal extends React.Component<MyProps> {
 
    @action.bound
    submit(e: React.SyntheticEvent) {
+      const { headerStore } = this.props
       e.preventDefault()
       console.log(this.handleModal.workspaceValue)
-      this.props.createworkSpace(this.handleModal.workspaceValue)
+      headerStore.addList(this.handleModal.workspaceValue)
    }
    render() {
       return (
          <div id='root'>
-            <TaskManagerHeaderCreate id='create'>
-               <TaskManagerHeaderButton onClick={this.handleOpenModal}>
-                  Create
-               </TaskManagerHeaderButton>
+            <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
+               <TaskManagerHeaderButton>+ Add List</TaskManagerHeaderButton>
             </TaskManagerHeaderCreate>
             <ReactModal
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 25,
-                     left: 100,
+                     top: 200,
+                     left: 300,
                      right: 0,
                      bottom: 0,
-                     backgroundColor: 'transparent'
+                     backgroundColor: 'rgba(255, 255, 255, 0.75)'
                   },
                   content: {
                      position: 'absolute',
@@ -69,7 +69,7 @@ class Modal extends React.Component<MyProps> {
                      right: '40px',
                      bottom: '40px',
                      border: '1px solid #ccc',
-
+                     background: '#fff',
                      overflow: 'auto',
                      WebkitOverflowScrolling: 'touch',
                      borderRadius: '4px',
@@ -81,8 +81,8 @@ class Modal extends React.Component<MyProps> {
                }}
                isOpen={this.handleModal.showModal}
                contentLabel='Minimal Modal Example'
-               className=' h-96 bg-white'
-               parentSelector={() => document.querySelector('#root')}
+               className='w-96 h-96 bg-white'
+               parentSelector={() => document.querySelector('#create')}
             >
                <ModalCreateContainer>
                   <TaskManagerHeaderButton
@@ -94,12 +94,12 @@ class Modal extends React.Component<MyProps> {
                   <form onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'
-                        placeholder='Add board title'
+                        placeholder='Add List title'
                         onChange={this.changeWorkspaceValue}
                         name='workSpace'
                      />
                      <CreateWorkspaceButton type='submit'>
-                        Add User
+                        Add List
                      </CreateWorkspaceButton>
                   </form>
                </ModalCreateContainer>
@@ -109,4 +109,4 @@ class Modal extends React.Component<MyProps> {
    }
 }
 
-export default Modal
+export default ListModal

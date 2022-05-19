@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import Cookies from 'js-cookie'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { observer, inject } from 'mobx-react'
 import { GrFormClose } from 'react-icons/gr'
-import BoardModal from '../App/BoardModel/index'
-import ListModal from '../App/ListModel/index'
+import BoardModal from '../BoardModel/index'
+import ListModal from '../ListModel/index'
 import Tasks from '../Tasks/index'
+import HeaderStore from '../../stores/HeaderStore/index'
 import {
    CreateListContainer,
    CreateListHeading,
@@ -18,35 +20,23 @@ import {
    AddTaskContainer
 } from './style'
 
-interface MyProps {
-   boardId: string
-   lists: { id: string; name: string }[]
-   addList: (listname: string) => void
-
-   addTask: (listId: string, taskName: string) => void
+interface HeaderProps {
+   headerStore: HeaderStore
 }
-class CreateList extends Component<MyProps> {
-   state = { addTaskActiveId: '', taskName: '' }
-   createList = listname => {
-      this.props.addList(listname)
-   }
 
-   updateAddTaskActiveId = e => this.setState({ addTaskActiveId: e.target.id })
-
-   closeAddTaskActiveId = e => this.setState({ addTaskActiveId: '' })
-
-   createTask = e => {
-      const { taskName } = this.state
-      this.props.addTask(e.target.id, taskName)
-   }
+@inject('headerStore')
+@observer
+class CreateList extends Component<HeaderProps> {
+   state = { taskName: '' }
 
    render(): React.ReactElement {
-      const { addTaskActiveId } = this.state
-      console.log('lists')
-      const { lists } = this.props
+      const { headerStore } = this.props
+      const { currentListId } = headerStore.headerState
+
+      const { lists } = headerStore.headerState
       console.log('hello lists')
       console.log(lists)
-      console.log(this.props.boardId)
+
       return (
          <>
             <CreateListUnorderedList>
@@ -61,10 +51,12 @@ class CreateList extends Component<MyProps> {
 
                      <Tasks listId={eachList.id} />
 
-                     {addTaskActiveId !== eachList.id ? (
+                     {currentListId !== eachList.id ? (
                         <>
                            <CreateTaskAddTaskButton
-                              onClick={this.updateAddTaskActiveId}
+                              onClick={e => {
+                                 headerStore.updateCurrentListId(e.target.id)
+                              }}
                               id={eachList.id}
                            >
                               + Add Task
@@ -80,14 +72,21 @@ class CreateList extends Component<MyProps> {
                            ></CreateTaskTextArea>
                            <AddTaskContainer>
                               <CreateTaskAddButton
-                                 onClick={this.createTask}
+                                 onClick={e =>
+                                    headerStore.addTask(
+                                       e.target.id,
+                                       this.state.taskName
+                                    )
+                                 }
                                  id={eachList.id}
                               >
                                  Add Task
                               </CreateTaskAddButton>
                               <GrFormClose
                                  className='text-3xl'
-                                 onClick={this.closeAddTaskActiveId}
+                                 onClick={() =>
+                                    headerStore.updateCurrentListId('')
+                                 }
                               />
                            </AddTaskContainer>
                         </>
@@ -96,7 +95,7 @@ class CreateList extends Component<MyProps> {
                ))}
             </CreateListUnorderedList>
 
-            <ListModal createList={this.createList} />
+            <ListModal headerStore={this.props.headerStore} />
          </>
       )
    }

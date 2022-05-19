@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Cookies from 'js-cookie'
+import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
-import BoardModal from '../App/BoardModel/index'
+import BoardModal from '../BoardModel/index'
+import HeaderStore from '../../stores/HeaderStore/index'
 
 import {
    CreateBoardContainer,
@@ -10,22 +12,18 @@ import {
    CreatedBoardItem
 } from './style'
 
-interface MyProps {
-   currentWorkSpace: string
-   boards: any
-   addBoard: (boardname: string) => void
+interface HeaderProps {
+   headerStore: HeaderStore
 }
-class CreateBoard extends Component<MyProps> {
-   createBoard = boardname => {
-      this.props.addBoard(boardname)
-   }
-
+@inject('headerStore')
+@observer
+class CreateBoard extends Component<HeaderProps> {
    render(): React.ReactElement {
       console.log('boards')
-      const { boards } = this.props
+      const { headerStore } = this.props
+      const { boards } = headerStore.headerState
       console.log('hello boards')
-      console.log(boards)
-      console.log(this.props.currentWorkSpace)
+
       return (
          <>
             <CreateBoardUnorderedList>
@@ -38,7 +36,7 @@ class CreateBoard extends Component<MyProps> {
                ))}
             </CreateBoardUnorderedList>
 
-            <BoardModal createBoard={this.createBoard} />
+            <BoardModal headerStore={this.props.headerStore} />
          </>
       )
    }

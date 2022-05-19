@@ -1,7 +1,8 @@
 import ReactModal from 'react-modal'
 import React from 'react'
 import { observable, action } from 'mobx'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
+import HeaderStore from '../../stores/HeaderStore/index'
 import {
    TaskManagerHeaderButton,
    TaskManagerHeaderCreate,
@@ -11,12 +12,12 @@ import {
 } from './style'
 import './index.css'
 
-interface MyProps {
-   createBoard: (name: string) => void
+interface HeaderProps {
+   headerStore: HeaderStore
 }
-
+@inject('headerStore')
 @observer
-class BoardModal extends React.Component<MyProps> {
+class Modal extends React.Component<HeaderProps> {
    @observable handleModal = { showModal: false, workspaceValue: '' }
 
    @action.bound
@@ -40,23 +41,24 @@ class BoardModal extends React.Component<MyProps> {
 
    @action.bound
    submit(e: React.SyntheticEvent) {
+      const { headerStore } = this.props
       e.preventDefault()
       console.log(this.handleModal.workspaceValue)
-      this.props.createBoard(this.handleModal.workspaceValue)
+      headerStore.createWorkSpace(this.handleModal.workspaceValue)
    }
    render() {
       return (
-         <div id='root1'>
-            <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
-               <TaskManagerHeaderButton id='createBoard'>
-                  + Create Board
+         <div id='root'>
+            <TaskManagerHeaderCreate id='create'>
+               <TaskManagerHeaderButton onClick={this.handleOpenModal}>
+                  Create
                </TaskManagerHeaderButton>
             </TaskManagerHeaderCreate>
             <ReactModal
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 100,
+                     top: 25,
                      left: 100,
                      right: 0,
                      bottom: 0,
@@ -81,8 +83,8 @@ class BoardModal extends React.Component<MyProps> {
                }}
                isOpen={this.handleModal.showModal}
                contentLabel='Minimal Modal Example'
-               className='w-96 h-96 bg-white'
-               parentSelector={() => document.querySelector('#createBoard')}
+               className=' h-96 bg-white'
+               parentSelector={() => document.querySelector('#root')}
             >
                <ModalCreateContainer>
                   <TaskManagerHeaderButton
@@ -99,7 +101,7 @@ class BoardModal extends React.Component<MyProps> {
                         name='workSpace'
                      />
                      <CreateWorkspaceButton type='submit'>
-                        Add Board
+                        Add User
                      </CreateWorkspaceButton>
                   </form>
                </ModalCreateContainer>
@@ -109,4 +111,4 @@ class BoardModal extends React.Component<MyProps> {
    }
 }
 
-export default BoardModal
+export default Modal

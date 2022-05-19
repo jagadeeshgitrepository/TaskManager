@@ -8,8 +8,10 @@ interface MyProps {
 class Tasks extends Component<MyProps> {
    state = { tasks: [] }
    componentDidMount() {
+      console.log('called tasks')
       this.getTasks(this.props.listId)
    }
+
    getTasks = async (listId: string) => {
       const jwtToken = Cookies.get('jwt_token')
 
