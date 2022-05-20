@@ -36,9 +36,13 @@ const Tasks = (props: MyProps) => {
    return (
       <>
          <TasksContainer>
-            {tasks.map((eachTask: { id: string; name: string }) => (
-               <EachTask key={eachTask.id}>{eachTask.name}</EachTask>
-            ))}
+            {tasks.map(
+               (eachTask: { id: string; name: string; pos: number }) => (
+                  <EachTask key={eachTask.id} id={eachTask.pos}>
+                     {eachTask.name}
+                  </EachTask>
+               )
+            )}
          </TasksContainer>
       </>
    )

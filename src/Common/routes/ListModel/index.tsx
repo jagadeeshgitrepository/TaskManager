@@ -74,23 +74,23 @@ class ListModal extends React.Component<ListProps> {
                      WebkitOverflowScrolling: 'touch',
                      borderRadius: '4px',
                      outline: 'none',
-                     padding: '20px',
-                     width: '300px',
-                     height: '200px'
+
+                     height: '88px',
+                     width: '254px'
                   }
                }}
                isOpen={this.handleModal.showModal}
                contentLabel='Minimal Modal Example'
-               className='w-96 h-96 bg-white'
+               className='bg-white"
+               height: 130px,
+               width: 254px,
+               left: 0px;
+               top: 0px;
+               border-radius: 4px;
+               '
                parentSelector={() => document.querySelector('#create')}
             >
                <ModalCreateContainer>
-                  <TaskManagerHeaderButton
-                     onClick={this.handleCloseModal}
-                     cross
-                  >
-                     X
-                  </TaskManagerHeaderButton>
                   <form onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'
@@ -101,6 +101,12 @@ class ListModal extends React.Component<ListProps> {
                      <CreateWorkspaceButton type='submit'>
                         Add List
                      </CreateWorkspaceButton>
+                     <TaskManagerHeaderButton
+                        onClick={this.handleCloseModal}
+                        cross
+                     >
+                        X
+                     </TaskManagerHeaderButton>
                   </form>
                </ModalCreateContainer>
             </ReactModal>

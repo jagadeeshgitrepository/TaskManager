@@ -10,7 +10,8 @@ export const TaskManagerHeaderCreate = styled.div`
 `
 
 export const ModalCreateContainer = styled.div`
-   ${tw`flex flex-col p-2 text-black justify-between items-start`}
+   ${tw`flex flex-col text-black justify-between items-start`}
+   width: 254px;
 `
 export const TaskManagerHeaderButton = styled.button`
 ${tw`   pb-2`}
@@ -19,14 +20,19 @@ ${tw`   pb-2`}
 `
 
 export const AddWorkspaceInput = styled.input`
-   ${tw`rounded p-2`}
-   background-color:#A7B1BF;
-   width: 250px;
-   height: 40px;
+   ${tw`rounded p-2 `}
+   border: 1px solid #0967D2;
+   height: 28px;
+   width: 222px;
 `
 export const CreateWorkspaceButton = styled.button`
-   ${tw`rounded mt-3 text-white `}
+   ${tw`rounded mt-3 text-white  `}
    width: 137px;
    height: 40px;
+   background-color: #1d4ed8;
+
+   width: 88px;
+   height: 32px;
+
    background-color: #1d4ed8;
 `
