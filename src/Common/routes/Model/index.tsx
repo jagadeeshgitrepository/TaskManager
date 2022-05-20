@@ -38,7 +38,6 @@ class Modal extends React.Component<HeaderProps> {
       console.log(e.currentTarget.value)
       this.handleModal.workspaceValue = e.currentTarget.value
    }
-
    @action.bound
    submit(e: React.SyntheticEvent) {
       const { headerStore } = this.props

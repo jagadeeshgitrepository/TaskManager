@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import { observer, inject } from 'mobx-react'
 import Modal from '../Model/index'
 import HeaderStore from '../../stores/HeaderStore/index'
+import ModalStores from '../../stores/ModalStores/index'
 
 import {
    TaskManagerHeader,
@@ -29,9 +30,10 @@ import './header.css'
 
 interface HeaderProps {
    headerStore: HeaderStore
+   modalStore: ModalStores
 }
 
-@inject('headerStore')
+@inject('headerStore', 'modalStore')
 @observer
 class Header extends Component<HeaderProps> {
    customStyles = {

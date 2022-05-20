@@ -2,7 +2,7 @@ import ReactModal from 'react-modal'
 import React from 'react'
 import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import HeaderStore from '../../stores/HeaderStore/index'
+import ListStore from '../../stores/ListsStore/index'
 import {
    TaskManagerHeaderButton,
    TaskManagerHeaderCreate,
@@ -12,12 +12,12 @@ import {
 } from './style'
 import './index.css'
 
-interface HeaderProps {
-   headerStore: HeaderStore
+interface ListProps {
+   listStore: ListStore
 }
-@inject('headerStore')
+@inject('listStore')
 @observer
-class ListModal extends React.Component<HeaderProps> {
+class ListModal extends React.Component<ListProps> {
    @observable handleModal = { showModal: false, workspaceValue: '' }
 
    @action.bound
@@ -41,10 +41,10 @@ class ListModal extends React.Component<HeaderProps> {
 
    @action.bound
    submit(e: React.SyntheticEvent) {
-      const { headerStore } = this.props
+      const { listStore } = this.props
       e.preventDefault()
       console.log(this.handleModal.workspaceValue)
-      headerStore.addList(this.handleModal.workspaceValue)
+      listStore.addList(this.handleModal.workspaceValue)
    }
    render() {
       return (

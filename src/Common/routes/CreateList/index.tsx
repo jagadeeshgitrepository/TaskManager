@@ -6,34 +6,38 @@ import { GrFormClose } from 'react-icons/gr'
 import BoardModal from '../BoardModel/index'
 import ListModal from '../ListModel/index'
 import Tasks from '../Tasks/index'
-import HeaderStore from '../../stores/HeaderStore/index'
+import ModalStores from '../../stores/ModalStores/index'
+import ListsStore from '../../stores/ListsStore/index'
+import TaskStore from '../../stores/TasksStore/index'
 import {
    CreateListContainer,
    CreateListHeading,
    CreateListUnorderedList,
    CreatedListItem,
    CreateTaskTitleContainer,
-   CreateTaskTitleHeading,
+   CreateTaskTitleHeadingInput,
    CreateTaskAddTaskButton,
    CreateTaskTextArea,
    CreateTaskAddButton,
    AddTaskContainer
 } from './style'
 
-interface HeaderProps {
-   headerStore: HeaderStore
+interface StoreProps {
+   listStore: ListsStore
+   taskStore: TaskStore
+   modalStore: ModalStores
 }
 
-@inject('headerStore')
+@inject('listStore', 'taskStore', 'modalStore')
 @observer
-class CreateList extends Component<HeaderProps> {
+class CreateList extends Component<StoreProps> {
    state = { taskName: '' }
 
    render(): React.ReactElement {
-      const { headerStore } = this.props
-      const { currentListId } = headerStore.headerState
+      const { listStore, taskStore } = this.props
+      const { currentListId } = listStore.listState
 
-      const { lists } = headerStore.headerState
+      const { lists } = listStore.listState
       console.log('hello lists')
       console.log(lists)
 
@@ -43,9 +47,8 @@ class CreateList extends Component<HeaderProps> {
                {lists.map((eachList: { name: string; id: string }) => (
                   <CreatedListItem id={eachList.id} key={eachList.id}>
                      <CreateTaskTitleContainer>
-                        <CreateTaskTitleHeading>
-                           {eachList.name}
-                        </CreateTaskTitleHeading>
+                        <CreateTaskTitleHeadingInput value={eachList.name} />
+
                         <BiDotsHorizontalRounded />
                      </CreateTaskTitleContainer>
 
@@ -55,7 +58,7 @@ class CreateList extends Component<HeaderProps> {
                         <>
                            <CreateTaskAddTaskButton
                               onClick={e => {
-                                 headerStore.updateCurrentListId(e.target.id)
+                                 listStore.updateCurrentListId(e.target.id)
                               }}
                               id={eachList.id}
                            >
@@ -67,17 +70,20 @@ class CreateList extends Component<HeaderProps> {
                            <CreateTaskTextArea
                               placeholder='Enter a Title For This Card'
                               onChange={e =>
-                                 this.setState({ taskName: e.target.value })
+                                 this.setState({
+                                    taskName: e.target.value
+                                 })
                               }
                            ></CreateTaskTextArea>
                            <AddTaskContainer>
                               <CreateTaskAddButton
-                                 onClick={e =>
-                                    headerStore.addTask(
+                                 onClick={e => {
+                                    taskStore.addTask(
                                        e.target.id,
                                        this.state.taskName
                                     )
-                                 }
+                                    listStore.getLists()
+                                 }}
                                  id={eachList.id}
                               >
                                  Add Task
@@ -85,7 +91,7 @@ class CreateList extends Component<HeaderProps> {
                               <GrFormClose
                                  className='text-3xl'
                                  onClick={() =>
-                                    headerStore.updateCurrentListId('')
+                                    listStore.updateCurrentListId('')
                                  }
                               />
                            </AddTaskContainer>
@@ -95,7 +101,7 @@ class CreateList extends Component<HeaderProps> {
                ))}
             </CreateListUnorderedList>
 
-            <ListModal headerStore={this.props.headerStore} />
+            <ListModal listStore={this.props.listStore} />
          </>
       )
    }

@@ -25,8 +25,10 @@ export const CreateTaskTitleContainer = styled.div`
    ${tw` flex flex-row justify-between w-full p-2 items-center`};
 `
 
-export const CreateTaskTitleHeading = styled.h1`
-   ${tw`text-sm`}
+export const CreateTaskTitleHeadingInput = styled.input`
+   ${tw`text-sm border-0 rounded `}
+   height: 28px;
+   width: 222px;
 `
 
 export const CreateTaskAddTaskButton = styled.button`
