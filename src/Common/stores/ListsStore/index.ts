@@ -21,9 +21,26 @@ class ListsStore {
    @action.bound
    updateCurrentListId = (listId: string) => {
       this.listState.currentListId = listId
-      console.log('header store')
    }
 
+   @action.bound
+   deleteList = async deleteListId => {
+      const jwtToken = Cookies.get('jwt_token')
+
+      const url = `https://api.trello.com/1/lists/${deleteListId}?key=8f4c47d39646c71bd5f9e09471af0d3e&token=${jwtToken}&closed=false`
+      const options = {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+         }
+      }
+      const response = await fetch(url, options)
+      const data = await response.json()
+      const { lists } = this.listState
+      const newList = lists.filter(eachItem => deleteListId !== eachItem.id)
+      this.listState.lists = newList
+   }
    @action.bound
    getLists = async () => {
       const jwtToken = Cookies.get('jwt_token')
@@ -44,9 +61,12 @@ class ListsStore {
       console.log('board detail lists')
       const listsData = data.map(eachList => ({
          id: eachList.id,
-         name: eachList.name
+         name: eachList.name,
+         pos: eachList.pos
       }))
       this.listState.lists = listsData
+      console.log('all lists')
+      console.log(listsData)
    }
    @action.bound
    addList = async listname => {
@@ -65,9 +85,10 @@ class ListsStore {
       const data = await response.json()
       console.log('lists created')
       console.log(data)
-      const newList: { id: string; name: string } = {
+      const newList: { id: string; name: string; pos: number } = {
          id: data.id,
-         name: data.name
+         name: data.name,
+         pos: data.pos
       }
       const updatedList = [...this.listState.lists, newList]
       this.listState.lists = updatedList

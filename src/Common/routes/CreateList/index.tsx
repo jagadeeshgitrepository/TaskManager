@@ -9,6 +9,7 @@ import Tasks from '../Tasks/index'
 import ModalStores from '../../stores/ModalStores/index'
 import ListsStore from '../../stores/ListsStore/index'
 import TaskStore from '../../stores/TasksStore/index'
+import ReactPopUp from '../popup/index'
 import {
    CreateListContainer,
    CreateListHeading,
@@ -49,7 +50,10 @@ class CreateList extends Component<StoreProps> {
                      <CreateTaskTitleContainer>
                         <CreateTaskTitleHeadingInput value={eachList.name} />
 
-                        <BiDotsHorizontalRounded />
+                        <ReactPopUp
+                           listStore={this.props.listStore}
+                           deleteListId={eachList.id}
+                        />
                      </CreateTaskTitleContainer>
 
                      <Tasks listId={eachList.id} />
