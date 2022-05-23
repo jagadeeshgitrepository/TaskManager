@@ -3,8 +3,12 @@ import Cookies from 'js-cookie'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { observer, inject } from 'mobx-react'
 import { GrFormClose } from 'react-icons/gr'
+import Loader from 'react-loader-spinner'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import BoardModal from '../BoardModel/index'
 import ListModal from '../ListModel/index'
+
 import Tasks from '../Tasks/index'
 import ModalStores from '../../stores/ModalStores/index'
 import ListsStore from '../../stores/ListsStore/index'
@@ -15,8 +19,8 @@ import {
    CreateListHeading,
    CreateListUnorderedList,
    CreatedListItem,
-   CreateTaskTitleContainer,
-   CreateTaskTitleHeadingInput,
+   CreateListTitleContainer,
+   CreateListTitleHeadingInput,
    CreateTaskAddTaskButton,
    CreateTaskTextArea,
    CreateTaskAddButton,
@@ -47,16 +51,19 @@ class CreateList extends Component<StoreProps> {
             <CreateListUnorderedList>
                {lists.map((eachList: { name: string; id: string }) => (
                   <CreatedListItem id={eachList.id} key={eachList.id}>
-                     <CreateTaskTitleContainer>
-                        <CreateTaskTitleHeadingInput value={eachList.name} />
+                     <CreateListTitleContainer>
+                        <CreateListTitleHeadingInput value={eachList.name} />
 
                         <ReactPopUp
                            listStore={this.props.listStore}
                            deleteListId={eachList.id}
                         />
-                     </CreateTaskTitleContainer>
+                     </CreateListTitleContainer>
 
-                     <Tasks listId={eachList.id} />
+                     <Tasks
+                        listId={eachList.id}
+                        taskStore={this.props.taskStore}
+                     />
 
                      {currentListId !== eachList.id ? (
                         <>
@@ -71,6 +78,17 @@ class CreateList extends Component<StoreProps> {
                         </>
                      ) : (
                         <>
+                           {taskStore.taskState.enableLoader && (
+                              <div>
+                                 <Loader
+                                    type='ThreeDots'
+                                    color='#0b69ff'
+                                    height='50'
+                                    width='50'
+                                 />
+                              </div>
+                           )}
+
                            <CreateTaskTextArea
                               placeholder='Enter a Title For This Card'
                               onChange={e =>
@@ -86,6 +104,7 @@ class CreateList extends Component<StoreProps> {
                                        e.target.id,
                                        this.state.taskName
                                     )
+                                    this.props.taskStore.enableTaskLoader()
                                     listStore.getLists()
                                  }}
                                  id={eachList.id}

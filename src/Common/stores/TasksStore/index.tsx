@@ -1,6 +1,12 @@
 import { observable, action } from 'mobx'
 import Cookies from 'js-cookie'
 class TaskStore {
+   @observable taskState = { enableLoader: false }
+
+   @action.bound
+   enableTaskLoader() {
+      this.taskState.enableLoader = !this.taskState.enableLoader
+   }
    @action.bound
    addTask = async (listId, taskName) => {
       const jwtToken = Cookies.get('jwt_token')

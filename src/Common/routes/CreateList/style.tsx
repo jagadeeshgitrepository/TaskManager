@@ -18,15 +18,15 @@ export const CreatedListItem = styled.li`
    ${tw`rounded flex pt-2 pb-2 pl-4 pr-4 flex-col justify-between m-2 items-start`};
    background-color: #ebecf0;
 
-   width: 254px;
+   width: 269px;
 `
 
-export const CreateTaskTitleContainer = styled.div`
-   ${tw` flex flex-row justify-between w-full p-2 items-center`};
+export const CreateListTitleContainer = styled.div`
+   ${tw` flex flex-row justify-between   items-center`};
 `
 
-export const CreateTaskTitleHeadingInput = styled.input`
-   ${tw`text-sm border-0 rounded `}
+export const CreateListTitleHeadingInput = styled.input`
+   ${tw`text-sm border-0 pl-2 mr-2 rounded `}
    height: 28px;
    width: 222px;
 `

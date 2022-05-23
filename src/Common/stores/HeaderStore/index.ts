@@ -6,7 +6,8 @@ class HeaderStore {
       organizations: [],
       currentWorkSpace: '',
       boards: [],
-      currentBoardId: ''
+      currentBoardId: '',
+      loaderActivate: false
    }
 
    @action.bound
@@ -72,6 +73,10 @@ class HeaderStore {
       console.log(data)
       this.headerState.boards = data
    }
+   @action.bound
+   loader() {
+      this.headerState.loaderActivate = true
+   }
 
    @action.bound
    addBoard = async boardname => {
@@ -85,9 +90,15 @@ class HeaderStore {
          }
       }
       const response = await fetch(url, options)
-      const data = await response.json()
-      console.log(response)
-      this.getBoards()
+      if (response.ok === true) {
+         const data = await response.json()
+         console.log(response)
+         this.headerState.loaderActivate = false
+         this.getBoards()
+      } else {
+         this.headerState.loaderActivate = false
+         alert('response failed')
+      }
    }
 }
 

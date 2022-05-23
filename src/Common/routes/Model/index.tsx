@@ -4,8 +4,8 @@ import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import HeaderStore from '../../stores/HeaderStore/index'
 import {
-   TaskManagerHeaderButton,
-   TaskManagerHeaderCreate,
+   TaskManagerOrganizationCreateButton,
+   TaskManagerOrganizationCreateContainer,
    ModalCreateContainer,
    AddWorkspaceInput,
    CreateWorkspaceButton
@@ -48,11 +48,13 @@ class Modal extends React.Component<HeaderProps> {
    render() {
       return (
          <div id='root'>
-            <TaskManagerHeaderCreate id='create'>
-               <TaskManagerHeaderButton onClick={this.handleOpenModal}>
+            <TaskManagerOrganizationCreateContainer id='create'>
+               <TaskManagerOrganizationCreateButton
+                  onClick={this.handleOpenModal}
+               >
                   Create
-               </TaskManagerHeaderButton>
-            </TaskManagerHeaderCreate>
+               </TaskManagerOrganizationCreateButton>
+            </TaskManagerOrganizationCreateContainer>
             <ReactModal
                style={{
                   overlay: {
@@ -86,12 +88,12 @@ class Modal extends React.Component<HeaderProps> {
                parentSelector={() => document.querySelector('#root')}
             >
                <ModalCreateContainer>
-                  <TaskManagerHeaderButton
+                  <TaskManagerOrganizationCreateButton
                      onClick={this.handleCloseModal}
                      cross
                   >
                      X
-                  </TaskManagerHeaderButton>
+                  </TaskManagerOrganizationCreateButton>
                   <form onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'

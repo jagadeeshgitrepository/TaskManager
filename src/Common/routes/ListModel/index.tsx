@@ -2,13 +2,17 @@ import ReactModal from 'react-modal'
 import React from 'react'
 import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
+import tw from 'twin.macro'
 import ListStore from '../../stores/ListsStore/index'
+
 import {
-   TaskManagerHeaderButton,
-   TaskManagerHeaderCreate,
+   TaskManagerListCreateButton,
+   TaskManagerListCreateContainer,
    ModalCreateContainer,
    AddWorkspaceInput,
-   CreateWorkspaceButton
+   CreateWorkspaceButton,
+   FormContainer,
+   TaskManagerButtonCloseContainer
 } from './style'
 import './index.css'
 
@@ -49,25 +53,25 @@ class ListModal extends React.Component<ListProps> {
    render() {
       return (
          <div id='root'>
-            <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
-               <TaskManagerHeaderButton>+ Add List</TaskManagerHeaderButton>
-            </TaskManagerHeaderCreate>
+            <TaskManagerListCreateContainer onClick={this.handleOpenModal}>
+               <TaskManagerListCreateButton id='createList'>
+                  + Add List
+               </TaskManagerListCreateButton>
+            </TaskManagerListCreateContainer>
             <ReactModal
                style={{
                   overlay: {
                      position: 'fixed',
-                     top: 200,
-                     left: 300,
+                     top: 0,
+                     left: 50,
                      right: 0,
                      bottom: 0,
-                     backgroundColor: 'rgba(255, 255, 255, 0.75)'
+
+                     backgroundColor: 'transparent'
                   },
                   content: {
                      position: 'absolute',
-                     top: '40px',
-                     left: '40px',
-                     right: '40px',
-                     bottom: '40px',
+
                      border: '1px solid #ccc',
                      background: '#fff',
                      overflow: 'auto',
@@ -75,8 +79,8 @@ class ListModal extends React.Component<ListProps> {
                      borderRadius: '4px',
                      outline: 'none',
 
-                     height: '88px',
-                     width: '254px'
+                     height: '102px',
+                     width: '251px'
                   }
                }}
                isOpen={this.handleModal.showModal}
@@ -88,26 +92,29 @@ class ListModal extends React.Component<ListProps> {
                top: 0px;
                border-radius: 4px;
                '
-               parentSelector={() => document.querySelector('#create')}
+               parentSelector={() => document.querySelector('#createList')}
             >
                <ModalCreateContainer>
-                  <form onSubmit={this.submit}>
+                  <FormContainer onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'
                         placeholder='Add List title'
                         onChange={this.changeWorkspaceValue}
                         name='workSpace'
                      />
-                     <CreateWorkspaceButton type='submit'>
-                        Add List
-                     </CreateWorkspaceButton>
-                     <TaskManagerHeaderButton
-                        onClick={this.handleCloseModal}
-                        cross
-                     >
-                        X
-                     </TaskManagerHeaderButton>
-                  </form>
+                     <TaskManagerButtonCloseContainer>
+                        <CreateWorkspaceButton type='submit'>
+                           Add List
+                        </CreateWorkspaceButton>
+                        <TaskManagerListCreateButton
+                           onClick={this.handleCloseModal}
+                           cross
+                           className='mt-2 ml-2'
+                        >
+                           X
+                        </TaskManagerListCreateButton>
+                     </TaskManagerButtonCloseContainer>
+                  </FormContainer>
                </ModalCreateContainer>
             </ReactModal>
          </div>

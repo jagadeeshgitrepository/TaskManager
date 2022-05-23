@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import Cookies from 'js-cookie'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
+
+import Loader from 'react-loader-spinner'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
+
 import BoardModal from '../BoardModel/index'
 import HeaderStore from '../../stores/HeaderStore/index'
 
@@ -35,6 +40,17 @@ class CreateBoard extends Component<HeaderProps> {
                   </Link>
                ))}
             </CreateBoardUnorderedList>
+
+            {headerStore.headerState.loaderActivate && (
+               <div>
+                  <Loader
+                     type='TailSpin'
+                     color='#00bfff'
+                     height={50}
+                     width={50}
+                  />
+               </div>
+            )}
 
             <BoardModal headerStore={this.props.headerStore} />
          </>

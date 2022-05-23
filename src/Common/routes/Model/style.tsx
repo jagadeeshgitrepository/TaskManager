@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import tw from 'twin.macro'
 
-export const TaskManagerHeaderCreate = styled.div`
+export const TaskManagerOrganizationCreateContainer = styled.div`
    ${tw`w-16 h-10 text-white flex flex-row items-center  justify-center `};
    background-color: #4e97c2;
    border-radius: 4px;
@@ -10,7 +10,7 @@ export const TaskManagerHeaderCreate = styled.div`
 export const ModalCreateContainer = styled.div`
    ${tw`flex flex-col p-2 text-black justify-between items-start`}
 `
-export const TaskManagerHeaderButton = styled.button`
+export const TaskManagerOrganizationCreateButton = styled.button`
 ${tw`self-end pb-2`}
    color: ${props => (props.cross ? 'black' : '')};
 

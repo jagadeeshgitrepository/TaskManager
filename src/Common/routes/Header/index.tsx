@@ -3,7 +3,13 @@ import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai'
 import Select from 'react-select'
 import Cookies from 'js-cookie'
 import { observer, inject } from 'mobx-react'
+import { Link } from 'react-router-dom'
+
+import Loader from 'react-loader-spinner'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Modal from '../Model/index'
+
 import HeaderStore from '../../stores/HeaderStore/index'
 import ModalStores from '../../stores/ModalStores/index'
 
@@ -60,9 +66,11 @@ class Header extends Component<HeaderProps> {
          <TaskManagerHeader>
             <TaskManagerHeaderMenuItems>
                <TaskManagerMenuItemList>
-                  <TaskManagerHeaderHome>
-                     <AiOutlineHome />
-                  </TaskManagerHeaderHome>
+                  <Link to='/home'>
+                     <TaskManagerHeaderHome>
+                        <AiOutlineHome />
+                     </TaskManagerHeaderHome>
+                  </Link>
                   <TaskManagerHeaderBriefContainer>
                      <TaskManagerHeaderBriefCase src='https://res.cloudinary.com/dmpepn8dm/image/upload/v1652699960/Task%20Manager/Line_a6zgc3.png' />
                   </TaskManagerHeaderBriefContainer>
@@ -74,12 +82,14 @@ class Header extends Component<HeaderProps> {
                   />
                   <Modal headerStore={this.props.headerStore} />
 
-                  <TaskManagerHeaderBoards>
-                     <TaskManagerHeaderBoardLogo src='https://res.cloudinary.com/dmpepn8dm/image/upload/v1652693709/Task%20Manager/logo_xdfebn.png' />
-                     <TaskManagerHeaderBoardHeading>
-                        Boards
-                     </TaskManagerHeaderBoardHeading>
-                  </TaskManagerHeaderBoards>
+                  <Link to='/home'>
+                     <TaskManagerHeaderBoards>
+                        <TaskManagerHeaderBoardLogo src='https://res.cloudinary.com/dmpepn8dm/image/upload/v1652693709/Task%20Manager/logo_xdfebn.png' />
+                        <TaskManagerHeaderBoardHeading>
+                           Boards
+                        </TaskManagerHeaderBoardHeading>
+                     </TaskManagerHeaderBoards>
+                  </Link>
                </TaskManagerMenuItemList>
                <TaskManagerMenuItemList>
                   <TaskManagerHeaderLogo src='https://res.cloudinary.com/dmpepn8dm/image/upload/v1652694609/Task%20Manager/Group_7401_3_spui3s.png' />

@@ -4,8 +4,8 @@ import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import HeaderStore from '../../stores/HeaderStore/index'
 import {
-   TaskManagerHeaderButton,
-   TaskManagerHeaderCreate,
+   TaskManagerCreateButton,
+   TaskManagerCreateBoardContainer,
    ModalCreateContainer,
    AddWorkspaceInput,
    CreateWorkspaceButton
@@ -49,11 +49,11 @@ class BoardModal extends React.Component<HeaderProps> {
    render() {
       return (
          <div id='root1'>
-            <TaskManagerHeaderCreate onClick={this.handleOpenModal}>
-               <TaskManagerHeaderButton id='createBoard'>
+            <TaskManagerCreateBoardContainer onClick={this.handleOpenModal}>
+               <TaskManagerCreateButton id='createBoard'>
                   + Create Board
-               </TaskManagerHeaderButton>
-            </TaskManagerHeaderCreate>
+               </TaskManagerCreateButton>
+            </TaskManagerCreateBoardContainer>
             <ReactModal
                style={{
                   overlay: {
@@ -87,12 +87,12 @@ class BoardModal extends React.Component<HeaderProps> {
                parentSelector={() => document.querySelector('#createBoard')}
             >
                <ModalCreateContainer>
-                  <TaskManagerHeaderButton
+                  <TaskManagerCreateButton
                      onClick={this.handleCloseModal}
                      cross
                   >
                      X
-                  </TaskManagerHeaderButton>
+                  </TaskManagerCreateButton>
                   <form onSubmit={this.submit}>
                      <AddWorkspaceInput
                         type='text'
@@ -100,7 +100,10 @@ class BoardModal extends React.Component<HeaderProps> {
                         onChange={this.changeWorkspaceValue}
                         name='workSpace'
                      />
-                     <CreateWorkspaceButton type='submit'>
+                     <CreateWorkspaceButton
+                        type='submit'
+                        onClick={() => this.props.headerStore.loader()}
+                     >
                         Add Board
                      </CreateWorkspaceButton>
                   </form>

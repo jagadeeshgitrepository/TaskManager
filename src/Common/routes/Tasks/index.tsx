@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
-
+import TaskStore from '../../stores/TasksStore/index'
 import 'twin.macro'
 import { EachTask, TasksContainer } from './style'
 interface MyProps {
    listId: string
+   taskStore: TaskStore
 }
 const Tasks = (props: MyProps) => {
    const [tasks, setTasks] = useState([])
@@ -23,12 +24,17 @@ const Tasks = (props: MyProps) => {
             }
          }
          const response = await fetch(url, options)
-         const data = await response.json()
-         console.log('all tasks in a list')
-         console.log(response)
-         console.log(data)
 
-         setTasks(data)
+         if (response.ok === true) {
+            const data = await response.json()
+            console.log('all tasks in a list')
+            console.log(response)
+            console.log(data)
+
+            setTasks(data)
+         } else {
+            console.log('response failed')
+         }
       }
       getTasks(props.listId)
    }, [props])
