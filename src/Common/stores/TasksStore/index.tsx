@@ -4,8 +4,8 @@ class TaskStore {
    @observable taskState = { enableLoader: false }
 
    @action.bound
-   enableTaskLoader() {
-      this.taskState.enableLoader = !this.taskState.enableLoader
+   enableTaskLoader(status) {
+      this.taskState.enableLoader = status
    }
    @action.bound
    addTask = async (listId, taskName) => {

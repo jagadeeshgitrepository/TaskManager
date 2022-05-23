@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Cookies from 'js-cookie'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'

@@ -30,7 +30,7 @@ const Tasks = (props: MyProps) => {
             console.log('all tasks in a list')
             console.log(response)
             console.log(data)
-
+            props.taskStore.enableTaskLoader(false)
             setTasks(data)
          } else {
             console.log('response failed')
